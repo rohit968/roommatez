@@ -1,0 +1,89 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0em 2em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  index: 999;
+  background-color: whitesmoke;
+
+  .logo {
+    height: 80px;
+    width: 80px;
+
+    .logo-image {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .nav-links {
+    font-size: 0.8rem;
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0em 2em;
+    * {
+      margin: 0 0.8em;
+    }
+
+    .link {
+      color: #252525;
+    }
+  }
+
+  .account-buttons {
+    display: flex;
+    width: 6em;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    .like-icon {
+      color: #252525;
+      font-size: 1.3rem;
+    }
+    .user-icon {
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out;
+    }
+    .reverse-btn {
+      background-color: #252525;
+      color: whitesmoke;
+      border: none;
+    }
+  }
+  .user-option {
+    height: 70px;
+    width: 100px;
+    background-color: #252525;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 70px;
+    right: 10px;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      height: 15px;
+      width: 15px;
+      background-color: #252525;
+      position: absolute;
+      right: 28px;
+      top: -8px;
+      transform: rotate(45deg);
+    }
+
+    .user-link {
+      color: white;
+      margin: 20px 0;
+      border-bottom: 1px solid whitesmoke;
+      margin: 10px 0;
+    }
+  }
+}
