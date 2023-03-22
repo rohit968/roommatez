@@ -6,6 +6,9 @@ import {
   SigninPage,
   Layout,
   AccountPage,
+  ProfilePage,
+  BookingsPage,
+  AccomodationsPage
 } from "./pages/index";
 import Header from "./components/header/Header";
 import { UserContextProvider } from "./UserContext";
@@ -23,7 +26,11 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/account/:subpage" element={<AccountPage />} />
+          <Route path="/account" element={<AccountPage />}>
+            <Route path="/account" element={<ProfilePage />} />
+            <Route path='/account/bookings' element={<BookingsPage />} />
+            <Route path='/account/places' element={<AccomodationsPage />} />
+          </Route>
         </Route>
       </Routes>
     </UserContextProvider>

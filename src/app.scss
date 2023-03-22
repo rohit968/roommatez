@@ -12,6 +12,13 @@
 
 .btn {
   padding: 0.6em 1.5em;
-  background-color: purple;
+  color: white;
   border-radius: 5px;
+}
+
+.flex {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

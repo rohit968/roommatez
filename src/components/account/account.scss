@@ -1,0 +1,17 @@
+.account-navbar {
+  padding: 7em 0 0 0;
+  justify-content: space-evenly;
+
+  .account-nav-btn {
+    font-size: 0.9rem;
+    color: #252525;
+    gap: 5px;
+  }
+  
+  .account-active-btn {
+    color: white;
+    background-color: rgb(205, 61, 61);
+  }
+}
+
+

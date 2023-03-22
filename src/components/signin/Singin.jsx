@@ -35,7 +35,7 @@ const Signin = () => {
         password: values.password,
       });
       setUser(response.data);
-      navigate("/");
+      navigate("/account");
     } catch (e) {
       alert("Loggin failed");
     }

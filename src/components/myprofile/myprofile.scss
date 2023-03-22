@@ -1,0 +1,14 @@
+.profile-container {
+  padding: 3em 3em;
+
+  .profile-user-details {
+    font-size: 1.1rem;
+    margin-bottom: 2em;
+
+    span {
+      color: rgb(205, 61, 61);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+  }
+}

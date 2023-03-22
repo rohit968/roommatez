@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { HiUserCircle } from "react-icons/hi";
 import { UserContext } from "../../UserContext";
@@ -8,11 +9,20 @@ import "./header.scss";
 
 const Header = () => {
   const [userOption, setUserOption] = useState(false);
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, setUser, setIsLoggedIn } = useContext(UserContext);
 
   const handleUserOptionToggle = () => {
     setUserOption(!userOption);
   };
+
+  const handleLogout = async () => {
+    await axios.post("/logout");
+    setUser(null);
+    setIsLoggedIn(false);
+    <Navigate to={"/"} />;
+  };
+
+  console.log(isLoggedIn);
 
   return (
     <nav role="navbar" className="navbar">
@@ -43,17 +53,30 @@ const Header = () => {
         )}
         {userOption && (
           <div className="user-option">
-            <Link to="/account" className=" link user-link">
+            <Link
+              to="/account"
+              className=" link user-link"
+              onClick={() => {
+                setUserOption(false);
+              }}
+            >
               Account
             </Link>
-            <Link to="/" className="link user-link">
+            <Link
+              to="/"
+              className="link user-link"
+              onClick={() => {
+                handleLogout();
+                setUserOption(false);
+              }}
+            >
               Logout
             </Link>
           </div>
         )}
       </div>
     </nav>
-  ); 
+  );
 };
 
 export default Header;
