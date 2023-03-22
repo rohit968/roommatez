@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route path="/account/:subpage" element={<AccountPage />} />
         </Route>
       </Routes>
     </UserContextProvider>

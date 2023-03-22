@@ -4,7 +4,7 @@ import axios from "axios";
 const UserContext = createContext({});
 
 const UserContextProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [user, setUser] = useState(null);
 
   // useEffect(() => {
