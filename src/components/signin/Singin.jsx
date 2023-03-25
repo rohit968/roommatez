@@ -29,7 +29,6 @@ const Signin = () => {
 
   const handleSubmit = async (values) => {
     try {
-      console.log("hello");
       const response = await axios.post("/login", {
         email: values.email,
         password: values.password,

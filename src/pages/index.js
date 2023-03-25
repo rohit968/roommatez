@@ -6,5 +6,6 @@ import AccountPage from "./AccountPage";
 import ProfilePage from "./ProfilePage";
 import BookingsPage from "./BookingsPage";
 import AccomodationsPage from "./AccomodationsPage";
+import NewPlacePage from './NewPlacePage';
 
-export { Home, SigninPage, SignupPage, Layout, AccountPage, ProfilePage, BookingsPage, AccomodationsPage };
+export { Home, SigninPage, SignupPage, Layout, AccountPage, ProfilePage, BookingsPage, AccomodationsPage, NewPlacePage };

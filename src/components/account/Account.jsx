@@ -14,9 +14,9 @@ const Account = () => {
     backgroundColor: "rgb(205, 61, 61)",
   };
 
-  if (!isLoggedIn) {
-    return "Loading...";
-  }
+  // if (!isLoggedIn) {
+  //   return "Loading...";
+  // }
 
   if (isLoggedIn && !user) {
     return <Navigate to={"/signin"} />;
@@ -26,11 +26,11 @@ const Account = () => {
     <nav className="account-navbar flex">
       <Link
         className={
-          location.pathname === "/account"
+          location.pathname === "/account/myprofile"
             ? "link btn account-nav-btn account-active-btn flex"
             : "link btn account-nav-btn flex"
         }
-        to="/account"
+        to="/account/myprofile"
       >
         <FaRegUser />
         My profile
