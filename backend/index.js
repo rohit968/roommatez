@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
@@ -22,7 +21,10 @@ app.use(cookieParser());
 app.use(cors(corsConfig));
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-mongoose.connect(process.env.DATABASE_CONNECTION_URL);
+mongoose.connect(process.env.DATABASE_CONNECTION_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const jwt_secret = "dadjkaksfjkalfjdfjnafjdsjkajfnjs";
 
@@ -76,7 +78,7 @@ app.get("/profile", (req, res) => {
 });
 
 const photosMiddleware = multer({ dest: 'uploads' })
-app.post('/uploads', photosMiddleware.array('photos', 50), (req, res) => {
+app.post('/uploads', photosMiddleware.array('photos', 200), (req, res) => {
   const uploadedFiles = [];
   for (let i = 0; i < req.files.length; i++) {
     const { path, originalname } = req.files[i];
@@ -84,15 +86,13 @@ app.post('/uploads', photosMiddleware.array('photos', 50), (req, res) => {
     const ext = parts[parts.length - 1];
     const newPath = path + '.' + ext;
     fs.renameSync(path, newPath);
-    console.log(newPath);
-    uploadedFiles.push(newPath.replace('uploads/', ''));
+    uploadedFiles.push(newPath);
   }
   res.json(uploadedFiles);
 })
 
 app.post('/addnewplace', async (req, res) => {
   const { token } = req.cookies;
-  console.log(JSON.stringify(req.cookies))
   const { title,
     address,
     addedPhotos,
@@ -101,7 +101,7 @@ app.post('/addnewplace', async (req, res) => {
     extraInfo,
     checkIn,
     checkOut,
-    noOfGuests } = req.body;
+    noOfGuests, price } = req.body;
   if (token) {
 
     jwt.verify(token, jwt_secret, {}, async (err, user) => {
@@ -116,14 +116,14 @@ app.post('/addnewplace', async (req, res) => {
         checkIn,
         checkOut,
         noOfGuests,
-
+        price,
       })
       res.json(addedPlaces);
     });
   }
 })
 
-app.get('/places', (req, res) => {
+app.get('/user-places', (req, res) => {
   const { token } = req.cookies;
   if (token) {
     jwt.verify(token, jwt_secret, {}, async (err, user) => {
@@ -131,11 +131,52 @@ app.get('/places', (req, res) => {
       const { id } = user;
       id
       const data = await Place.find({ owner: id });
-      console.log(data);
       res.json(await Place.find({ owner: id }));
     })
   }
 })
+
+app.get('/places/:id', async (req, res) => {
+  const { id } = req.params;
+  res.json(await Place.findById(id))
+})
+
+app.put('/addnewplace', (req, res) => {
+  const { token } = req.cookies;
+  const { id, title,
+    address,
+    addedPhotos,
+    description,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    noOfGuests, price } = req.body;
+
+  jwt.verify(token, jwt_secret, {}, async (err, user) => {
+    if (err) throw err;
+    const place = await Place.findById(id);
+    if (user.id === place.owner.toString()) {
+      place.set({
+        title,
+        address,
+        photos: addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        noOfGuests, price
+      })
+      await place.save();
+      res.status(200).json(place)
+    }
+  })
+})
+
+app.get('/places', async (req, res) => [
+  res.json(await Place.find())
+])
 
 app.post('/logout', (req, res) => {
   res.cookie('token', '').json(true);

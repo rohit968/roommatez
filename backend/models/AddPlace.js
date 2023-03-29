@@ -24,6 +24,7 @@ const AddPlaceSchema = new mongoose.Schema({
     require: true,
   },
   maxGuests: Number,
+  price: Number,
 })
 
 const AddPlaceModel = mongoose.model('AddPlace', AddPlaceSchema);
