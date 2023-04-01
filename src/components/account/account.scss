@@ -2,6 +2,10 @@
   padding: 7em 0 0 0;
   justify-content: space-evenly;
 
+  @media screen and (max-width: 550px) {
+    flex-direction: column;
+  }
+
   .account-nav-btn {
     font-size: 0.9rem;
     color: #252525;

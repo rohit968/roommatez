@@ -7,5 +7,6 @@ import ProfilePage from "./ProfilePage";
 import BookingsPage from "./BookingsPage";
 import AccomodationsPage from "./AccomodationsPage";
 import NewPlacePage from './NewPlacePage';
+import DetailsPage from "./DetailsPage";
 
-export { Home, SigninPage, SignupPage, Layout, AccountPage, ProfilePage, BookingsPage, AccomodationsPage, NewPlacePage };
+export { Home, SigninPage, SignupPage, Layout, AccountPage, ProfilePage, BookingsPage, AccomodationsPage, NewPlacePage, DetailsPage };

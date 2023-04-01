@@ -14,31 +14,66 @@ const Perks = ({ selected, onChange }) => {
   return (
     <div className="perks-container">
       <label>
-        <input type="checkbox" name="wifi" onChange={handleBoxClick} />
+        <input
+          type="checkbox"
+          checked={selected.includes("wifi")}
+          name="wifi"
+          onChange={handleBoxClick}
+        />
         <span>Wifi</span>
       </label>
       <label>
-        <input type="checkbox" name="parking" onChange={handleBoxClick} />
+        <input
+          type="checkbox"
+          checked={selected.includes("parking")}
+          name="parking"
+          onChange={handleBoxClick}
+        />
         <span>Free Parking</span>
       </label>
       <label>
-        <input type="checkbox" name="pets" onChange={handleBoxClick} />
+        <input
+          type="checkbox"
+          checked={selected.includes("pets")}
+          name="pets"
+          onChange={handleBoxClick}
+        />
         <span>Pets</span>
       </label>
       <label>
-        <input type="checkbox" name="breakfast" onChange={handleBoxClick} />
+        <input
+          type="checkbox"
+          checked={selected.includes("breakfast")}
+          name="breakfast"
+          onChange={handleBoxClick}
+        />
         <span>Breakfast</span>
       </label>
       <label>
-        <input type="checkbox" name="pool" onChange={handleBoxClick} />
+        <input
+          type="checkbox"
+          checked={selected.includes("pool")}
+          name="pool"
+          onChange={handleBoxClick}
+        />
         <span>Swimming Pool</span>
       </label>
       <label>
-        <input type="checkbox" name="tv" onChange={handleBoxClick} />
+        <input
+          type="checkbox"
+          checked={selected.includes("tv")}
+          name="tv"
+          onChange={handleBoxClick}
+        />
         <span>TV</span>
       </label>
       <label>
-        <input type="checkbox" name="spa" onChange={handleBoxClick} />
+        <input
+          type="checkbox"
+          checked={selected.includes("spa")}
+          name="spa"
+          onChange={handleBoxClick}
+        />
         <span>SPA</span>
       </label>
     </div>

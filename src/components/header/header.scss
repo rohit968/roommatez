@@ -6,8 +6,12 @@
   position: fixed;
   top: 0;
   width: 100%;
-  index: 999;
+  z-index: 999;
   background-color: whitesmoke;
+
+  @media screen and (max-width: 550px) {
+    padding: 0em 0em;    
+  }
 
   .logo {
     height: 80px;
@@ -28,6 +32,10 @@
     margin: 0em 2em;
     * {
       margin: 0 0.8em;
+    }
+
+    @media screen and (max-width: 550px) {
+      margin: 0em;
     }
 
     .link {

@@ -10,6 +10,7 @@ require("dotenv").config();
 const fs = require('fs');
 const User = require("./models/User");
 const Place = require('./models/AddPlace');
+const Booking = require('./models/Booking')
 
 const corsConfig = {
   origin: true,
@@ -115,7 +116,7 @@ app.post('/addnewplace', async (req, res) => {
         extraInfo,
         checkIn,
         checkOut,
-        noOfGuests,
+        maxGuests: noOfGuests,
         price,
       })
       res.json(addedPlaces);
@@ -172,6 +173,33 @@ app.put('/addnewplace', (req, res) => {
       res.status(200).json(place)
     }
   })
+})
+
+app.post('/booking', async (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, jwt_secret, {}, async (err, user) => {
+    if (err) throw err;
+    const { placeId, checkInDate, checkOutDate, guests, name, contact, price } = req.body;
+    await Booking.create({
+      placeId, checkInDate, checkOutDate, guests, name, contact, price, user: user.id
+    }).then((data) => {
+      res.status(200).json(data);
+    }).catch((err) => {
+      throw err;
+    })
+  })
+})
+
+app.get('/booking', async (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, jwt_secret, {}, async (err, user) => {
+    if (err) throw err;
+    const bookingdata = await Booking.find({ user: user.id });
+    if (bookingdata) {
+      res.status(200).json(bookingdata)
+    }
+  })
+
 })
 
 app.get('/places', async (req, res) => [

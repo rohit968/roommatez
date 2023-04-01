@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Perks from "../perks/Perks";
 import axios from "axios";
+import { RxCrossCircled } from "react-icons/rx";
+import { HiOutlineStar, HiStar } from "react-icons/hi";
 import "./newplace.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const NewPlace = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState();
   const [address, setAddress] = useState();
@@ -14,7 +17,28 @@ const NewPlace = () => {
   const [extraInfo, setExtraInfo] = useState();
   const [checkIn, setCheckIn] = useState();
   const [checkOut, setCheckOut] = useState();
-  const [noOfGuests, setNoOfGuests] = useState(1);
+  const [maxGuests, setMaxGuests] = useState(1);
+  const [price, setPrice] = useState(100);
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    axios.get("/places/" + id).then((response) => {
+      const { data } = response;
+      console.log(data);
+      setTitle(data.title);
+      setAddress(data.address);
+      setAddedPhotos(data.photos);
+      setDescription(data.description);
+      setPerks(data.perks);
+      setExtraInfo(data.extraInfo);
+      setCheckIn(data.checkIn);
+      setCheckOut(data.checkOut);
+      setMaxGuests(data.maxGuests);
+      setPrice(data.price);
+    });
+  }, [id]);
 
   const uploadPhoto = (e) => {
     console.log("Hello");
@@ -33,10 +57,10 @@ const NewPlace = () => {
       });
   };
 
-  const addNewPlace = async (e) => {
+  const saveplace = async (e) => {
     e.preventDefault();
-
-    await axios.post("/addnewplace", {
+    console.log(addedPhotos);
+    const placeData = {
       title,
       address,
       addedPhotos,
@@ -45,15 +69,37 @@ const NewPlace = () => {
       extraInfo,
       checkIn,
       checkOut,
-      noOfGuests,
-    });
+      maxGuests,
+      price,
+    };
+    if (id) {
+      await axios.put("/addnewplace", {
+        id,
+        ...placeData,
+      });
+      navigate("/account/places");
+    } else {
+      await axios.post("/addnewplace", placeData);
+    }
     console.log("ADD");
     navigate("/account/places");
   };
 
+  const deletePhoto = (filename) => {
+    setAddedPhotos([...addedPhotos.filter((photo) => photo !== filename)]);
+    console.log(addedPhotos);
+  };
+
+  const setmainphoto = (filename) => {
+    setAddedPhotos([
+      filename,
+      ...addedPhotos.filter((photo) => photo !== filename),
+    ]);
+  };
+
   return (
     <div className="newplace-form flex">
-      <form className="form-container" onSubmit={addNewPlace}>
+      <form className="newplace-form-container" onSubmit={saveplace}>
         <div className="title form-sub-section">
           <h3 className="label-heading">Title</h3>
           <p className="label-description">Add a fancy title for your place</p>
@@ -86,9 +132,22 @@ const NewPlace = () => {
               addedPhotos.map((photo) => (
                 <div className="images" key={photo}>
                   <img
-                    src={"http://localhost:4000/" + photo}
+                    src={process.env.REACT_APP_BASE_URL + photo}
                     className="singleimage"
                   />
+                  <button className="image-btn cross">
+                    <RxCrossCircled onClick={() => deletePhoto(photo)} />
+                  </button>
+                  {photo === addedPhotos[0] && (
+                    <button className="image-btn star">
+                      <HiStar onClick={() => setmainphoto(photo)} />
+                    </button>
+                  )}
+                  {photo !== addedPhotos[0] && (
+                    <button className="image-btn star">
+                      <HiOutlineStar onClick={() => setmainphoto(photo)} />
+                    </button>
+                  )}
                 </div>
               ))}
           </div>
@@ -136,43 +195,52 @@ const NewPlace = () => {
             buffer between them
           </p>
           <div className="checkin-out-guests">
-            <div className="checkin form-sub-section">
+            <div className="checkin chcek-section form-sub-section">
               <h3 className="label-heading">CheckIn Time</h3>
               <input
-                type="time"
+                type="number"
                 value={checkIn}
                 onChange={(e) => setCheckIn(e.target.value)}
               />
             </div>
-            <div className="checkout form-sub-section">
+            <div className="checkout chcek-section form-sub-section">
               <h3 className="label-heading">CheckOut Time</h3>
               <input
-                type="time"
+                type="number"
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
               />
             </div>
 
-            <div className="numberofguests form-sub-section">
+            <div className="numberofguests chcek-section form-sub-section">
               <h3 className="label-heading">Number of Guests</h3>
               <div className="countofguests">
-                <span onClick={() => setNoOfGuests(noOfGuests + 1)}>+</span>
+                <span onClick={() => setMaxGuests(parseInt(maxGuests) + 1)}>
+                  +
+                </span>
                 <input
                   type="number"
-                  placeholder="2"
-                  value={noOfGuests}
-                  onChange={(e) => setNoOfGuests(e.target.value)}
+                  value={maxGuests}
+                  onChange={(e) => setMaxGuests(e.target.value)}
                 />
                 <span
                   onClick={() => {
-                    if (noOfGuests >= 2) {
-                      setNoOfGuests(noOfGuests - 1);
+                    if (maxGuests >= 2) {
+                      setMaxGuests(parseInt(maxGuests) - 1);
                     }
                   }}
                 >
                   -
                 </span>
               </div>
+            </div>
+            <div className="price chcek-section form-sub-section">
+              <h3 className="label-heading">Price per night</h3>
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
             </div>
           </div>
         </div>

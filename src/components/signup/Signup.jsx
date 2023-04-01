@@ -46,7 +46,7 @@ const Signin = () => {
       <div className="account-image">
         <img src={accountImage} alt="Account Image" className="accountImage" />
       </div>
-      <div className="form-container">
+      <div className="form-container flex">
         <h1 className="form-heading">
           Welcome to Roommatez!{" "}
           <GiHand className="form-icon" style={{ color: "#ffcc80" }} />

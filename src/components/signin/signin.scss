@@ -13,6 +13,10 @@
     align-items: center;
     justify-content: center;
     width: 50%;
+
+    @media screen and (max-width: 550px) {
+      width: 100%;
+    }
   
     .signin-form {
       display: flex;
@@ -107,6 +111,9 @@
   .account-image {
     width: 400px;
     height: 550px;
+    @media screen and (max-width: 550px) {
+      display: none;
+    }
   }
   
   .accountImage {

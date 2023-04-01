@@ -10,13 +10,13 @@ import {
   BookingsPage,
   AccomodationsPage,
   NewPlacePage,
+  DetailsPage,
 } from "./pages/index";
-import Header from "./components/header/Header";
 import { UserContextProvider } from "./UserContext";
 import axios from "axios";
-import Account from "./components/account/Account";
 
 axios.defaults.baseURL = "http://127.0.0.1:4000";
+//axios.defaults.baseURL = "https://roommtez-backend.onrender.com/";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -32,8 +32,9 @@ const App = () => {
             <Route path='bookings' element={<BookingsPage />} />
             <Route path='places' element={<AccomodationsPage />} />
             <Route path='places/new' element={<NewPlacePage />} />
+            <Route path='places/:id' element={<NewPlacePage />} />
           </Route>
-          <Route path='*' element={<SigninPage />} />
+          <Route path='place/:id' element={<DetailsPage />} />
         </Route>
       </Routes>
     </UserContextProvider>

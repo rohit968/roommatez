@@ -1,8 +1,24 @@
+:root {
+  --red-color: rgb(205, 61, 61); 
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+@mixin truncate($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncate {
+  @include truncate(3);
 }
 
 .link {
@@ -17,7 +33,6 @@
 }
 
 .flex {
-  
   display: flex;
   justify-content: center;
   align-items: center;
